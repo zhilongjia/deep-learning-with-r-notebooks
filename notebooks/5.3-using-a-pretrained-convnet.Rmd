@@ -52,7 +52,7 @@ The VGG16 model, among others, comes prepackaged with Keras. Here's the list of 
 
 Let's instantiate the VGG16 model:
 
-```{r}
+```{r, echo=TRUE, results='hide'}
 library(keras)
 
 conv_base <- application_vgg16(
@@ -278,7 +278,7 @@ Let's plot our results again:
 plot(history)
 ```
 
-As you can see, we reach a validation accuracy of about 96%. This is much better than our small convnet trained from scratch.
+As you can see, we reach a validation accuracy of about 90%. This is much better than our small convnet trained from scratch.
 
 ## Fine-tuning
 
@@ -302,22 +302,20 @@ As a reminder, this is what our convolutional base looks like:
 summary(conv_base)
 ```
 
-We will fine-tune the last 3 convolutional layers, which means that all layers up until `block4_pool` should be frozen, and the layers `block5_conv1`, `block5_conv2` and `block5_conv3` should be trainable.
-
-Why not fine-tune more layers? Why not fine-tune the entire convolutional base? We could. However, we need to consider that:
+We will fine-tune all of the layers from `block3_conv1` and on. Why not fine-tune more layers? Why not fine-tune the entire convolutional base? We could. However, we need to consider that:
 
 * Earlier layers in the convolutional base encode more generic, reusable features, while layers higher up encode more specialized features. It is more useful to fine-tune the more specialized features, as these are the ones that need to be repurposed on our new problem. There would be fast-decreasing returns in fine-tuning lower layers.
 * The more parameters we are training, the more we are at risk of overfitting. The convolutional base has 15M parameters, so it would be risky to attempt to train it on our small dataset.
 
-Thus, in our situation, it is a good strategy to only fine-tune the top 2 to 3 layers in the convolutional base.
+Thus, in our situation, it is a good strategy to only some of the layers in the convolutional base.
 
 Let's set this up, starting from where we left off in the previous example:
 
 ```{r}
-unfreeze_weights(conv_base, from = "block5_conv1")
+unfreeze_weights(conv_base, from = "block3_conv1")
 ```
 
-Now we can start fine-tuning our network. We will do this with the RMSprop optimizer, using a very low learning rate. The reason for using a low learning rate is that we want to limit the magnitude of the modifications we make to the representations of the 3 layers that we are fine-tuning. Updates that are too large may harm these representations.
+Now we can start fine-tuning our network. We will do this with the RMSprop optimizer, using a very low learning rate. The reason for using a low learning rate is that we want to limit the magnitude of the modifications we make to the representations of the layers that we are fine-tuning. Updates that are too large may harm these representations.
 
 Now let's proceed with fine-tuning:
 
@@ -347,7 +345,7 @@ Let's plot our results using the same plotting code as before:
 plot(history)
 ```
 
-We are seeing a nice 1% absolute improvement in accuracy, from about 96% to above 97%.
+We are seeing a nice 6% absolute improvement in accuracy, from about 90% to above 96%.
 
 Note that the loss curve doesn't show any real improvement (in fact, it's deteriorating). You may wonder, how could accuracy stay stable or improve if the loss isn't decreasing? The answer is simple: what you display is an average of pointwise loss values; but what matters for accuracy is the distribution of the loss values, not their average, because accuracy is the result of a binary thresholding of the class probability predicted by the model. The model may still be improving even if this isn't reflected in the average loss.
 
@@ -365,7 +363,7 @@ test_generator <- flow_images_from_directory(
 model %>% evaluate_generator(test_generator, steps = 50)
 ```
 
-Here we get a test accuracy of ~ 97%. In the original Kaggle competition around this dataset, this would have been one of the top results. However, using modern deep learning techniques, we managed to reach this result using only a very small fraction of the training data available (about 10%). There is a huge difference between being able to train on 20,000 samples compared to 2,000 samples!
+Here we get a test accuracy of 96.5%. In the original Kaggle competition around this dataset, this would have been one of the top results. However, using modern deep learning techniques, we managed to reach this result using only a very small fraction of the training data available (about 10%). There is a huge difference between being able to train on 20,000 samples compared to 2,000 samples!
 
 ## Take-aways: using convnets with small datasets
 

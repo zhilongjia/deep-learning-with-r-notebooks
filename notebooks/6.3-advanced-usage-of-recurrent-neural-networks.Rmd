@@ -47,14 +47,16 @@ unzip(
 
 Let's take a look at the data:
 
-```{r}
+```{r, results='hide'}
 library(tibble)
 library(readr)
 
 data_dir <- "~/Downloads/jena_climate"
 fname <- file.path(data_dir, "jena_climate_2009_2016.csv")
 data <- read_csv(fname)
+```
 
+```{r}
 glimpse(data)
 ```
 
@@ -310,7 +312,7 @@ disrupt this error signal and be harmful to the learning process.
 
 Yarin Gal did his research using Keras and helped build this mechanism directly into Keras recurrent layers. Every recurrent layer in Keras has two dropout-related arguments: `dropout`, a float specifying the dropout rate for input units of the layer, and `recurrent_dropout`, specifying the dropout rate of the recurrent units. Let's add dropout and recurrent dropout to our GRU layer and see how it impacts overfitting. Because networks being regularized with dropout always take longer to fully converge, we train our network for twice as many epochs.
 
-```{r}
+```{r, echo=TRUE, results='hide'}
 model <- keras_model_sequential() %>% 
   layer_gru(units = 32, dropout = 0.2, recurrent_dropout = 0.2,
             input_shape = list(NULL, dim(data)[[-1]])) %>% 
@@ -596,4 +598,3 @@ Although they offer clear gains on complex problems (such as machine translation
 * Bidirectional RNNs, which look at a sequence both ways, are useful on natural-language processing problems. But they aren't strong performers on sequence data where the recent past is much more informative than the beginning of the sequence.
 
 There are two important concepts we won't cover in detail here: recurrent attention and sequence masking. Both tend to be especially relevant for natural-language processing, and they aren't particularly applicable to thetemperature-forecasting problem. We'll leave them for future study outside of this book.
-

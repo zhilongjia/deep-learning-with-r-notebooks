@@ -105,7 +105,7 @@ history <- model %>% fit(
 )
 ```
 
-We get to a validation accuracy of ~75%, which is pretty good considering that we only look at the first 20 words in every review. But note that merely flattening the embedded sequences and training a single dense layer on top leads to a model that treats each word in the input sequence separately, without considering inter-word relationships and structure sentence (e.g. it would likely treat both _"this movie is shit"_ and _"this movie is the shit"_ as being negative "reviews"). It would be much better to add recurrent layers or 1D convolutional layers on top of the embedded sequences to learn features that take into account each sequenceas a whole. That's what we will focus on in the next few sections.
+We get to a validation accuracy of ~75%, which is pretty good considering that we only look at 20 words from each review. But note that merely flattening the embedded sequences and training a single dense layer on top leads to a model that treats each word in the input sequence separately, without considering inter-word relationships and structure sentence (e.g. it would likely treat both _"this movie is shit"_ and _"this movie is the shit"_ as being negative "reviews"). It would be much better to add recurrent layers or 1D convolutional layers on top of the embedded sequences to learn features that take into account each sequenceas a whole. That's what we will focus on in the next few sections.
 
 ## Using pre-trained word embeddings
 

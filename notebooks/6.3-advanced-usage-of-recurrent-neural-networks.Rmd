@@ -86,7 +86,7 @@ The exact formulation of our problem will be the following: given data going as 
 
 We will use the following parameter values:
 
-* `lookback = 720`, i.e. our observations will go back 5 days.
+* `lookback = 1440`, i.e. our observations will go back 10 days.
 * `steps = 6`, i.e. our observations will be sampled at one data point per hour.
 * `delay = 144`, i.e. our targets will be 24 hours in the future.
 

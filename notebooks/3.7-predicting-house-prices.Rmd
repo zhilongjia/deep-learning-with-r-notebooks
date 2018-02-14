@@ -122,7 +122,7 @@ In terms of code, this is straightforward:
 ```{r, echo=TRUE, results='hide'}
 k <- 4
 indices <- sample(1:nrow(train_data))
-folds <- cut(indices, breaks = k, labels = FALSE)
+folds <- cut(1:length(indices), breaks = k, labels = FALSE) 
 
 num_epochs <- 100
 all_scores <- c()

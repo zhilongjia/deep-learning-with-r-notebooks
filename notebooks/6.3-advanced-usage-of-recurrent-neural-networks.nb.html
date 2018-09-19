@@ -327,7 +327,7 @@ data &lt;- scale(data, center = mean, scale = std)</code></pre>
     } else {
       if (i + batch_size &gt;= max_index)
         i &lt;&lt;- min_index + lookback
-      rows &lt;- c(i:min(i+batch_size, max_index))
+      rows &lt;- c(i:min(i+batch_size-1, max_index))
       i &lt;&lt;- i + length(rows)
     }
     
@@ -337,7 +337,7 @@ data &lt;- scale(data, center = mean, scale = std)</code></pre>
     targets &lt;- array(0, dim = c(length(rows)))
                      
     for (j in 1:length(rows)) {
-      indices &lt;- seq(rows[[j]] - lookback, rows[[j]], 
+      indices &lt;- seq(rows[[j]] - lookback, rows[[j]] - 1, 
                      length.out = dim(samples)[[2]])
       samples[j,,] &lt;- data[indices,]
       targets[[j]] &lt;- data[rows[[j]] + delay,2]

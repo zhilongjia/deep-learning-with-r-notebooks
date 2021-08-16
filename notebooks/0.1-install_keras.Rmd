@@ -1,0 +1,47 @@
+---
+title: "Install keras"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+# Python environment
+
+Defining the conda environment will clarify the install of keras.
+
+```{r}
+reticulate::use_condaenv("~/local/anaconda3/bin/conda")
+reticulate::conda_create(envname = "r-reticulate")
+reticulate::use_condaenv("~/local/anaconda/envs/r-reticulate")
+
+# Verify if it was properly selected
+reticulate::py_config()
+
+```
+
+# tensorflow
+```{r}
+# install.packages("tensorflow")
+tensorflow::install_tensorflow(method = 'conda', envname = 'r-reticulate')
+```
+
+# keras
+```{r}
+library(keras)
+keras::install_keras(method = 'conda', tensorflow = "gpu", envname = 'r-reticulate')
+keras::is_keras_available()
+
+# https://stackoverflow.com/questions/66540020/trouble-installing-keras-gpu-in-r-invalid-version-specification
+# require(devtools)
+# install_version("keras", version = "2.3.0.0")
+# keras::install_keras(method="conda", tensorflow = "gpu")
+```
+
+# cuda
+
+`conda install -c conda-forge cudnn`
+
+
+

@@ -1,13 +1,18 @@
 
+# two-label classification
+
 library(keras)
 
+# imdb dataset
+################################################################################
+# reformat data
 imdb <- dataset_imdb(num_words = 10000)
-
 str(imdb)
 c(c(train_data, train_labels), c(test_data, test_labels) ) %<-% imdb
 
 train_data[[1]]
 
+# a number seq to a matrix
 vec_seq <- function(alist, ncol=10000) {
     res <- matrix(0, nrow=length(alist), ncol=ncol)
     for (i in 1:length(alist)) {
@@ -48,8 +53,13 @@ par_y_train <- y_train[-val_ind]
 res1 <- model %>% fit(par_x_train, par_y_train, epochs=20, batch_size=512, validation_data=list(x_val, y_val) )
 plot(res1)
 
+###############
+res3 <- model %>% fit(x_train, y_train, epochs=20, batch_size=512, validation_split=0.2 )
+plot(res3)
+
+
 ################################################################################
-# for get acc of test
+# for get acc of test, training for the start
 model <- keras_model_sequential() %>% 
     layer_dense(units=16, activation = "relu", input_shape =c(10000) ) %>% 
     layer_dense(units = 16, activation = "relu") %>% 

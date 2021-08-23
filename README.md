@@ -4,7 +4,11 @@ This repository contains R Markdown notebooks implementing the code samples foun
 
 Update:
 
-* add `0.1-install_keras.Rmd`
+* add `0.1-install_keras.Rmd` Aug. 19, 2021
+* add `3.4_IMDB_classifier.R` Aug. 19, 2021
+* add `3.5_reutrers_classifier.R` Aug. 23, 2021
+* add `typo.md` Aug. 23, 2021
+* add `README.md` Aug. 23, 2021
 
 ***
 

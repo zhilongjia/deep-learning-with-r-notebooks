@@ -9,6 +9,7 @@ Update:
 * add `3.5_reutrers_classifier.R` Aug. 23, 2021
 * add `typo.md` Aug. 23, 2021
 * add `README.md` Aug. 23, 2021
+* add `3.6_house_price.R` Sept. 7, 2021
 
 ***
 

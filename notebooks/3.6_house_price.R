@@ -68,7 +68,7 @@ mean(all_scores)
 # version 2
 # save log
 
-um_epochs <- 500
+num_epochs <- 500
 all_mae_scores <- c()
 
 for (i in 1:k) {
